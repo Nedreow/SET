@@ -3,6 +3,5 @@
     <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include=".gitignore" />
   </ItemGroup>
 </Project>

@@ -4,21 +4,21 @@ using SET;
 
 public class Card : Node2D
 {
-    public int CardSize = 250;
+    private int _cardSize = 250;
 
-    [Export] public float cardScale = 1f;
+    [Export]
+    public float CardScale = 1f;
 
-    public readonly int SymbolShape;
-    public readonly int SymbolCount;
-    public readonly int SymbolColor;
-    public readonly int SymbolFill;
+    private readonly CardProperties _cardProperties;
 
-    public Card()
+    public int SymbolShape => _cardProperties.SymbolShape;
+    public int SymbolCount => _cardProperties.SymbolCount;
+    public int SymbolColor => _cardProperties.SymbolColor;
+    public int SymbolFill => _cardProperties.SymbolFill;
+
+    public Card(CardProperties card)
     {
-        SymbolShape = 2;
-        SymbolCount = 2;
-        SymbolColor = 3;
-        SymbolFill = 3;
+        _cardProperties = card;
     }
 
     // Called when the node enters the scene tree for the first time.
@@ -34,11 +34,11 @@ public class Card : Node2D
     
     public override void _Draw()
     {
-        var cardDimensions = new Rect2(0, 0, CardSize * cardScale, CardSize * 1.4f * cardScale);
+        var cardDimensions = new Rect2(0, 0, _cardSize * CardScale, _cardSize * 1.4f * CardScale);
         var cardColor = new Color(1, 1, 0.941176F, 1);
         
         var styleBox = new StyleBoxFlat();
-        styleBox.SetCornerRadiusAll(CardSize / 10);
+        styleBox.SetCornerRadiusAll(_cardSize / 10);
         styleBox.BgColor = cardColor;
         
         DrawStyleBox(styleBox, cardDimensions);
@@ -59,8 +59,8 @@ public class Card : Node2D
         
         var sprite = new Sprite();
         sprite.Texture = Config.Textures[SymbolShape][SymbolFill];
-        sprite.Scale = new Vector2(0.20f * cardScale, 0.20f * cardScale);
-        sprite.Offset = new Vector2(CardSize * 2.5f, CardSize * (1.6f + startingOffset + 1.9f * location));
+        sprite.Scale = new Vector2(0.20f * CardScale, 0.20f * CardScale);
+        sprite.Offset = new Vector2(_cardSize * 2.5f, _cardSize * (1.6f + startingOffset + 1.9f * location));
         sprite.Modulate = Config.Colors[SymbolColor];
         
         AddChild(sprite);
